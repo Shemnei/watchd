@@ -1,0 +1,11 @@
+[package]
+name = "txtimg"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+colored = "2.0.0"
+image = "0.24.3"
+
+[dev-dependencies]
+terminal_size = "0.2.1"

@@ -1,0 +1,15 @@
+[workspace]
+members = [
+	"crates/txtimg",
+]
+
+[package]
+name = "watchd"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "watchd"
+path = "crates/watchd/main.rs"
+
+[dependencies]
