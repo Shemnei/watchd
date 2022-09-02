@@ -23,7 +23,7 @@ mod pallete {
 		let idx = luminance as f32 / (u8::MAX as f32 / PALETTE.len() as f32);
 		let idx = idx as usize;
 
-		PALETTE[idx]
+		PALETTE[idx.clamp(0, PALETTE.len() - 1)]
 	}
 }
 
@@ -60,14 +60,16 @@ impl TextImage {
 		for y in 0..height {
 			for x in 0..width {
 				let p = image.get_pixel(x, y);
-				let l = luminance(p);
 				let color = rgb(p);
-				//let f = Some(color);
-				let f = Some(color);
-				//let i = (255 - color.0, 255 - color.1, 255 - color.2);
-				//let b = (0, 0, 0);
-				let b = None;
-				let c = get_char(l);
+				let b = Some(color);
+				let f = None;
+
+				let c = if f.is_some() {
+					let l = luminance(p);
+					get_char(l)
+				} else {
+					' '
+				};
 
 				pixels.push(Pixel { c, b, f });
 			}
@@ -124,8 +126,7 @@ fn img() {
 
 	println!("{:?}", (width, height));
 
-	//let img = image::open("/home/mtx/Downloads/test.jpg").unwrap();
-	let img = image::open("/home/mtx/Downloads/a.jpg").unwrap();
+	let img = image::open("assets/tux.png").unwrap();
 	let img = TextImage::from_image(img, Options { width, height });
 
 	let mut buf = String::new();
